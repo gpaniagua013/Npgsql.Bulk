@@ -1,8 +1,9 @@
 ﻿using System;
 using System.ComponentModel.DataAnnotations;
 using System.ComponentModel.DataAnnotations.Schema;
+using NpgsqlTypes;
 
-namespace Npgsql.Bulk.DAL
+namespace Npgsql.Bulk.SampleRunner.DotNetStandard20.DAL
 {
     [Table("addresses", Schema = "public")]
     public class Address
@@ -22,7 +23,10 @@ namespace Npgsql.Bulk.DAL
         [Column("postal_code"), Required()]
         public string PostalCode { get; set; }
 
-        [Column("created_at"), DatabaseGenerated(DatabaseGeneratedOption.Computed)]
+        [Column("range")]
+        public NpgsqlRange<DateTime> Duration { get; set; }
+
+        [Column("created_at")]
         public DateTime CreatedAt { get; set; }
     }
 }

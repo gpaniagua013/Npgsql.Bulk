@@ -1,6 +1,8 @@
-﻿using System;
+﻿#if NETSTANDARD1_5 || NETSTANDARD2_0
+using Microsoft.EntityFrameworkCore.ValueGeneration;
+#endif
 using System.Collections.Generic;
-using System.Linq;
+using System.Reflection;
 
 namespace Npgsql.Bulk.Model
 {
@@ -13,6 +15,8 @@ namespace Npgsql.Bulk.Model
         public string[] TableNames { get; internal set; }
 
         public List<MappingInfo> MappingInfos { get; set; }
+
+        public Dictionary<PropertyInfo, MappingInfo> PropToMappingInfo { get; set; }
 
         public string SelectSourceForInsertQuery { get; set; }
 
@@ -43,5 +47,11 @@ namespace Npgsql.Bulk.Model
         public string[] KeyColumnNames { get; set; }
 
         public object CodeBuilder { get; set; }
+
+#if NETSTANDARD1_5 || NETSTANDARD2_0
+        public Dictionary<PropertyInfo, ValueGenerator> PropertyToGenerators;
+
+        public Dictionary<string, ValueGenerator> PropertyNameToGenerators;
+#endif
     }
 }
